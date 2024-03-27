@@ -17,36 +17,24 @@ def cleanup(file_path,file_extension):
     files = []
     for f in os.listdir(DOWNLOADS):
         for ext in file_extension:
-            #if value in f: - below fixes the issue if file is name has an extension in it
+            #if value in f: - below fixes the issue if file name has an extension in it
              if f.lower().endswith(ext):   
                 files.append(f)
                 continue
                 
-
     #creating folder based on folder names passed
     for file in files:
-        #if file exist
+        #make new directory if folder does not exists else move on
         os.makedirs(file_path, exist_ok=True)
         path = file_path + file
-        shutil.move(DOWNLOADS+file, path)
+        # check if file already exists in new folder and then dont copy it over
+        if not os.path.exists(path):
+            shutil.move(DOWNLOADS+file, path)
        
-'''
-if os.path.isdir(file_path):
-            path = file_path + file
-            shutil.move(DOWNLOADS+file,path)
-        else:
-            #if file does not exist create new file
-            os.mkdir(file_path)
-            new_path = file_path + file
-            shutil.move(DOWNLOADS+file, new_path)
-'''
-
-
 cleanup(IMAGES, image_extensions)
 cleanup(DOCUMENTS, document_extensions)
 
 
 #Done- creating methods so you can call one method pass in the type of extension and that will execute
 #Done- currently i assume if files were named with the extension and the extensions were different - it move wrong files - test this - use lower.endswith('.txt')
-#danger-if two files were named the same then it will simply replace - this needs fixing
-#adding 
+#danger-if two files were named the same then it will simply replace - this needs fixing - not actually fixed, temp solution to not copy
