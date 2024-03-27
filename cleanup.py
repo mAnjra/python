@@ -1,6 +1,10 @@
 import shutil
 import os
 
+'''
+Download folder cleaner - dumps files into folder
+'''
+
 DOWNLOADS = '/Users/azhar/Downloads/'
 IMAGES = '/Users/azhar/Downloads/images/'
 DOCUMENTS = '/Users/azhar/Downloads/documents/'
@@ -22,7 +26,12 @@ def cleanup(file_path,file_extension):
     #creating folder based on folder names passed
     for file in files:
         #if file exist
-        if os.path.isdir(file_path):
+        os.makedirs(file_path, exist_ok=True)
+        path = file_path + file
+        shutil.move(DOWNLOADS+file, path)
+       
+'''
+if os.path.isdir(file_path):
             path = file_path + file
             shutil.move(DOWNLOADS+file,path)
         else:
@@ -30,6 +39,7 @@ def cleanup(file_path,file_extension):
             os.mkdir(file_path)
             new_path = file_path + file
             shutil.move(DOWNLOADS+file, new_path)
+'''
 
 
 cleanup(IMAGES, image_extensions)
@@ -39,3 +49,4 @@ cleanup(DOCUMENTS, document_extensions)
 #Done- creating methods so you can call one method pass in the type of extension and that will execute
 #Done- currently i assume if files were named with the extension and the extensions were different - it move wrong files - test this - use lower.endswith('.txt')
 #danger-if two files were named the same then it will simply replace - this needs fixing
+#adding 
