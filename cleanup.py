@@ -5,17 +5,19 @@ DOWNLOADS = '/Users/azhar/Downloads/'
 IMAGES = '/Users/azhar/Downloads/images/'
 DOCUMENTS = '/Users/azhar/Downloads/documents/'
 
-image_extensions = {'jpeg':'.jpg','HEIC':'.HEIC','heic':'.heic','PNG':'.png'}
-document_extensions = {'pdf':'.pdf', 'txt':'.txt'}
+image_extensions = {'.jpg','.HEIC','.heic','.png'}
+document_extensions = {'.pdf', '.txt'}
 
 def cleanup(file_path,file_extension):
     #collecting all files based on the type of extension passed within the downloads folder
     files = []
     for f in os.listdir(DOWNLOADS):
-        for key, value in file_extension.items():
+        for ext in file_extension:
             #if value in f: - below fixes the issue if file is name has an extension in it
-             if f.lower().endswith(value):   
+             if f.lower().endswith(ext):   
                 files.append(f)
+                continue
+                
 
     #creating folder based on folder names passed
     for file in files:
