@@ -1,9 +1,11 @@
 import shutil
 import os
+import random
 
 '''
 Download folder cleaner - dumps files into folder
 '''
+random.seed()
 
 DOWNLOADS = '/Users/azhar/Downloads/'
 IMAGES = '/Users/azhar/Downloads/images/'
@@ -30,6 +32,11 @@ def cleanup(file_path,file_extension):
         # check if file already exists in new folder and then dont copy it over
         if not os.path.exists(path):
             shutil.move(DOWNLOADS+file, path)
+        else:
+            #rename file and then move over to images
+            file_rename = f'(Copy ID: {random.random()}) {file}'
+            os.rename(DOWNLOADS+file, DOWNLOADS+file_rename)
+            shutil.move(DOWNLOADS+file_rename, file_path+file_rename)
        
 cleanup(IMAGES, image_extensions)
 cleanup(DOCUMENTS, document_extensions)
@@ -37,4 +44,6 @@ cleanup(DOCUMENTS, document_extensions)
 
 #Done- creating methods so you can call one method pass in the type of extension and that will execute
 #Done- currently i assume if files were named with the extension and the extensions were different - it move wrong files - test this - use lower.endswith('.txt')
-#danger-if two files were named the same then it will simply replace - this needs fixing - not actually fixed, temp solution to not copy
+#Done- if two files were named the same then it will simply replace - this needs fixing - not actually fixed, temp solution to not copy
+#Done- rename file and append random number generator - now completed used seeded random gen to append to file then move to keep both files
+# not best solution ideally i will want to check to see if a copy exists in the directory then increment by 1 for every new copy added
