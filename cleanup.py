@@ -1,6 +1,11 @@
 import shutil
 import os
 import random
+import time
+import logging
+
+from watchdog.observers import Observer
+from watchdog.events import LoggingEventHandler
 
 '''
 Download folder cleaner - dumps files into folder
@@ -13,6 +18,7 @@ DOCUMENTS = '/Users/azhar/Downloads/documents/'
 
 image_extensions = {'.jpg','.HEIC','.heic','.png'}
 document_extensions = {'.pdf', '.txt'}
+
 
 def cleanup(file_path,file_extension):
     #collecting all files based on the type of extension passed within the downloads folder
@@ -38,8 +44,46 @@ def cleanup(file_path,file_extension):
             os.rename(DOWNLOADS+file, DOWNLOADS+file_rename)
             shutil.move(DOWNLOADS+file_rename, file_path+file_rename)
        
-cleanup(IMAGES, image_extensions)
-cleanup(DOCUMENTS, document_extensions)
+
+class EventHandler(LoggingEventHandler):
+    def on_modified(self, event):
+        cleanup(IMAGES, image_extensions)
+
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s - %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S')
+    
+    #path = sys.argv[1] if len(sys.argv) > 1 else '.'
+    #logging.info(f'start watching directory {path!r}')
+    event_handler = EventHandler()
+    path = DOWNLOADS
+
+    #instantiating observer class - watches for any file system changes and then send event to event handler
+    observer = Observer()
+
+    observer.schedule(event_handler, path, recursive=True)
+    observer.start()
+
+    try:
+        #running indefintely until stopped at terminal
+        while True:
+            time.sleep(1)
+    finally:
+        observer.stop()
+        observer.join()
+
+
+
+d
+
+
+
+
+#cleanup(IMAGES, image_extensions)
+#cleanup(DOCUMENTS, document_extensions)
 
 
 #Done- creating methods so you can call one method pass in the type of extension and that will execute
@@ -47,3 +91,4 @@ cleanup(DOCUMENTS, document_extensions)
 #Done- if two files were named the same then it will simply replace - this needs fixing - not actually fixed, temp solution to not copy
 #Done- rename file and append random number generator - now completed used seeded random gen to append to file then move to keep both files
 # not best solution ideally i will want to check to see if a copy exists in the directory then increment by 1 for every new copy added
+# add handler to automatically add to directory when anything new is added
