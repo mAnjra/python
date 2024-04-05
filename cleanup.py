@@ -10,14 +10,17 @@ from watchdog.events import LoggingEventHandler
 '''
 Download folder cleaner - dumps files into folder
 '''
+# defualt start point will be system time if no arg passed
 random.seed()
 
 DOWNLOADS = '/Users/azhar/Downloads/'
 IMAGES = '/Users/azhar/Downloads/images/'
 DOCUMENTS = '/Users/azhar/Downloads/documents/'
+APPLICATIONS = '/Users/azhar/Downloads/applications/'
 
 image_extensions = {'.jpg','.HEIC','.heic','.png'}
 document_extensions = {'.pdf', '.txt'}
+disk_image_extensions = {'.dmg'}
 
 
 def cleanup(file_path,file_extension):
@@ -48,7 +51,8 @@ def cleanup(file_path,file_extension):
 class EventHandler(LoggingEventHandler):
     def on_modified(self, event):
         cleanup(IMAGES, image_extensions)
-
+        cleanup(DOCUMENTS, document_extensions)
+        cleanup(APPLICATIONS, disk_image_extensions)
 
 
 if __name__ == "__main__":
@@ -56,8 +60,6 @@ if __name__ == "__main__":
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
     
-    #path = sys.argv[1] if len(sys.argv) > 1 else '.'
-    #logging.info(f'start watching directory {path!r}')
     event_handler = EventHandler()
     path = DOWNLOADS
 
@@ -76,19 +78,10 @@ if __name__ == "__main__":
         observer.join()
 
 
-
-d
-
-
-
-
-#cleanup(IMAGES, image_extensions)
-#cleanup(DOCUMENTS, document_extensions)
-
-
 #Done- creating methods so you can call one method pass in the type of extension and that will execute
 #Done- currently i assume if files were named with the extension and the extensions were different - it move wrong files - test this - use lower.endswith('.txt')
 #Done- if two files were named the same then it will simply replace - this needs fixing - not actually fixed, temp solution to not copy
 #Done- rename file and append random number generator - now completed used seeded random gen to append to file then move to keep both files
 # not best solution ideally i will want to check to see if a copy exists in the directory then increment by 1 for every new copy added
-# add handler to automatically add to directory when anything new is added
+#Done  add handler to automatically add to directory when anything new is added
+#
