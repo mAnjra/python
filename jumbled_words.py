@@ -1,5 +1,10 @@
-"""input a sentence and it will reorder to the 
-words keeping the first and the last the same"""
+"""input a sentence and it will reorder the 
+words keeping the first and the last the same
+
+To test the phenomenon where if you mix the letters and keep the 
+first and last the same our brains can still pick it up - quick
+way to do it rather than to do it manually
+"""
 import random
 
 def jumbler(word):
@@ -10,12 +15,11 @@ def jumbler(word):
         random.shuffle(f)
     shuffled_word = word[0] + ''.join(f) + word[-1]
     return shuffled_word
-#print("enter sentence")
-#sent = input()
-sent = "method in Python is used to concatenate elements of an iterable"
-print(sent)
 
-#if its greater than 3 letters then jumble
+print("Enter Sentence: ")
+sent = input()
+print("Original sentence: ", sent)
+
 sentence_list = []
 # separate words into a list of words
 word = ""
@@ -28,17 +32,9 @@ for i , l in enumerate(sent):
     if i == len(sent)-1:
         sentence_list.append(word)
 
-print(len(sentence_list))
-
-# now you need to get index n and decide wether the size is bigger than 4 or not
 for i, s in enumerate(sentence_list):
-    #now anything greater than get special jumbler treatment
     if len(s) > 3:
         sentence_list[i] = jumbler(s)
 
-print(sentence_list)
-
-
-    # f is shuffled now we want to 
-
-
+string_sentence = ' '.join(sentence_list)
+print("Jumbled: ", string_sentence)
