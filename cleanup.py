@@ -13,7 +13,10 @@ Download folder cleaner - dumps files into folders
 # defualt start point will be system time if no arg passed
 random.seed()
 
-DOWNLOADS = '/Users/azhar/Downloads/'
+#find directory where cleanup.py exist
+dir_pth = os.path.dirname(os.path.realpath(__file__))
+
+DOWNLOADS = dir_pth
 IMAGES = '/Users/azhar/Downloads/images/'
 DOCUMENTS = '/Users/azhar/Downloads/documents/'
 APPLICATIONS = '/Users/azhar/Downloads/applications/'
