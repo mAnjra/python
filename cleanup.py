@@ -16,7 +16,7 @@ random.seed()
 #find directory where cleanup.py exist
 dir_pth = os.path.dirname(os.path.realpath(__file__))
 
-DOWNLOADS = dir_pth
+DOWNLOADS = dir_pth+'/'
 IMAGES = '/Users/azhar/Downloads/images/'
 DOCUMENTS = '/Users/azhar/Downloads/documents/'
 APPLICATIONS = '/Users/azhar/Downloads/applications/'
